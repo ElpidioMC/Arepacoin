@@ -1,6 +1,6 @@
 Arepacoin
 ===========================
-Arepacoin nace el 25 de septiembre del 2016 con el fin de convertirse en una moneda referente de Venezuela en el mundo, con una emisión total de 60.000.000 de Arepas y un PoS del 3% de interés anual. Esta desarrollada con el algoritmo Scrypt PoW-PoS, que le permite ser una moneda robusta con un crecimiento de forma orgánica y con gran solidez.
+Arepacoin nace el 25 de septiembre del 2016 con el fin de convertirse en una moneda referente de Venezuela en el mundo, con una emisión total de 60.000.000 de Arepas y un PoS del 3% de interés anual. Esta desarrollada con el algoritmo Scrypt PoW-PoS, que le permite ser una moneda robusta con un crecimiento de forma orgánica y con gran solidez. Puerto RPC: 8586 y Puerto P2P: 8585. 
 
 Los bloques minables mediante PoW tienen una recompensa generada de la siguiente manera:
 ---------------------
