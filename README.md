@@ -22,8 +22,15 @@ sudo apt-get upgrade
 sudo apt-get install git
 git clone https://github.com/ElpidioMC/Arepacoin
 cd Arepacoin
+
+## Para Ubuntu 17.10 y anteriores.
 chmod +x Compilar.sh
 ./Compilar.sh
-./arepacoin-qt
+./Arepacoin-qt
+
+## Para Ubuntu 18.04 y superiores.
+chmod +x Compilar.sh
+./Compilar_Ubuntu18.sh
+./Arepacoin-qt
 ```
 
