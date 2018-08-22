@@ -1662,7 +1662,7 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex, bool fJustCheck)
 
         int64_t nCalculatedStakeReward = GetProofOfStakeReward(pindex->nHeight, nCoinAge, nFees);
 
-        if (nStakeReward > nCalculatedStakeReward)
+        if (pindex->nHeight > 536000 && nStakeReward > nCalculatedStakeReward)
             return DoS(100, error("ConnectBlock() : coinstake pays too much(actual=%"PRId64" vs calculated=%"PRId64")", nStakeReward, nCalculatedStakeReward));
     }
 
@@ -3040,6 +3040,15 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         // ppcoin: ask for pending sync-checkpoint if any
         if (!IsInitialBlockDownload())
             Checkpoints::AskForPendingSyncCheckpoint(pfrom);
+
+        // Be more aggressive with blockchain download. Send new getblocks() message after connection
+        // to new node if waited longer than MAX_TIME_SINCE_BEST_BLOCK.
+        int64_t TimeSinceBestBlock = GetTime() - nTimeBestReceived;
+        if (TimeSinceBestBlock > MAX_TIME_SINCE_BEST_BLOCK)
+        {
+            printf("INFO: Waiting %ld sec which is too long. Sending GetBlocks(0)\n", TimeSinceBestBlock);
+            pfrom->PushGetBlocks(pindexBest, uint256(0));
+        }
     }
 
 
@@ -3410,6 +3419,17 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 
         if (ProcessBlock(pfrom, &block))
             mapAlreadyAskedFor.erase(inv);
+        else
+        {
+            // Be more aggressive with blockchain download. Send getblocks() message after
+            // an error related to new block download
+            int64_t TimeSinceBestBlock = GetTime() - nTimeBestReceived;
+            if (TimeSinceBestBlock > MAX_TIME_SINCE_BEST_BLOCK)
+            {
+                printf("INFO: Waiting %ld sec which is too long. Sending GetBlocks(0)\n", TimeSinceBestBlock);
+                pfrom->PushGetBlocks(pindexBest, uint256(0));
+            }
+        }
         if (block.nDoS) pfrom->Misbehaving(block.nDoS);
     }
 
