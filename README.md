@@ -29,7 +29,7 @@ chmod +x Compilar.sh
 ./Arepacoin-qt
 
 ## Para Ubuntu 18.04 y superiores.
-chmod +x Compilar.sh
+chmod +x Compilar_Ubuntu18.sh
 ./Compilar_Ubuntu18.sh
 ./Arepacoin-qt
 ```
