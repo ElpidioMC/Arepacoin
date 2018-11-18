@@ -101,8 +101,8 @@ private:
     TransactionView *transactionView;
     RPCConsole *rpcConsole;
 
-    QMovie *syncIconMovie;
-
+    int prevBlocks;
+    int spinnerFrame;
     uint64_t nWeight;
 
     /** Create the main UI actions. */
